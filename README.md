@@ -1,10 +1,8 @@
 # Prompt iteration: mobile RPG key art
 
-*Work in progress. Cross-model comparison to come.*
-
 A short record of how I work a text-to-image prompt from a vague first attempt to something that actually matches a brief. I picked a mobile game key art brief because it has real constraints: it has to read at thumbnail size, and it has to look like a store asset rather than generic fantasy art. Each round shows the prompt, what came back, what was wrong with it, and what I changed to fix it.
 
-Generated in Gemini (Flash, image tool). Prompt restructuring worked out in Claude.
+Generated in Gemini (Flash 3.6, Nano Banana 2), with a cross-model check in ChatGPT. Prompt restructuring worked out in Claude.
 
 ## The brief
 
@@ -137,6 +135,28 @@ Minor: the stone went lighter than the mid-value grey-teal I asked for and reads
 
 Round 3 is close to the brief. The thumbnail read works, there's one clear focal point, the palette holds together, and it looks like a game asset rather than stock fantasy art. What it isn't is the tighter composition I asked for, and that gap survived every attempt to fix it.
 
+## Same prompt, different model
+
+I ran the round 3 prompt through ChatGPT unchanged, to see how much of what I was getting was the prompt and how much was the model.
+
+![ChatGPT output from the round 3 prompt](images/chatgpt-comparison.png)
+
+The framing landed immediately. Low angle, figure filling the frame, looking up at her from below. That is the instruction Gemini ignored three times across three different phrasings. Same words, different model, and it worked first try. So it was never a phrasing problem. It was a model limitation, and I had spent two rounds trying to fix it from the wrong end.
+
+The background also mostly cleared. There are distant ruins on the right but nothing framing her the way Gemini's arch did in every single round.
+
+Some things went the other way. The spell came out as a large diffuse crackling field rather than the contained burst I asked for, and Gemini's tighter orb was closer to the brief. The palette drifted too. I specified teal and indigo and got mostly blue and grey against a warm sky, where Gemini held the colours better. The style register is different as well: ChatGPT read "painterly semi-realistic" as tight digital concept art, Gemini read it as something flatter and more stylised. Neither is wrong, they just interpret the same words differently.
+
+**Thumbnail test**
+
+![ChatGPT version at thumbnail size](images/chatgpt-comparison-thumbnail.png)
+
+She dominates the frame here in a way the Gemini version doesn't, which is the payoff from the framing working. The spell still reads as a clear bright point.
+
+But the bottom third goes muddy. Her lower half, the tattered cloak and the dark ruins merge into one indistinct mass, so you lose where she ends and the ground starts. Gemini's lighter stone platform kept that separation. The silhouette is noisier overall too, because the ragged fabric edges break up the outline that Gemini's clean cloak shape kept crisp.
+
+So it isn't that one model is better. ChatGPT got the composition right and the value separation wrong at the bottom. Gemini got the palette and the silhouette clean but never gave me the framing. A finished asset would want ChatGPT's framing with Gemini's lower-half clarity.
+
 ## What I learned
 
 The most useful thing was that fixing one problem broke another. Round 2 solved the clutter and the colour fight and cost me the thumbnail read, because the naive prompt in round 1 was accidentally doing something right that I hadn't noticed until it was gone. Fixes have costs, and you only find them by testing against the brief each time rather than just looking at whether the image improved.
@@ -144,5 +164,7 @@ The most useful thing was that fixing one problem broke another. Round 2 solved 
 The model's account of its own output is not evidence. In round 2 Gemini told me it had been unable to leave out the archway lettering and the ground runes, then produced an image with neither. It was right about the background and wrong about the rest. Check the image, not the caption.
 
 Some instructions take and some don't, and the difference isn't about how clearly you phrase them. Lighting, palette and value contrast all responded well to plain description. Framing and background removal failed every time regardless of phrasing, including when I switched from negatives to positive descriptions. Knowing which category an instruction falls into saves rounds.
+
+The clearest lesson came from running the same prompt through a second model. The framing instruction Gemini ignored three times worked in ChatGPT on the first attempt, unchanged. I had assumed I was phrasing it badly and spent two rounds rewording it. If an instruction fails repeatedly, testing it somewhere else is faster than rewriting it again, because it tells you whether the problem is the prompt or the tool.
 
 Negatives are unreliable but not useless. "No text" did remove the invented lettering, even though the model said it couldn't. It's worth trying and worth verifying.
